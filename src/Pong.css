@@ -1,0 +1,18 @@
+body {
+  --pivotal-green: #86c775;
+  --pivotal-teal: #008774;
+}
+
+.navbar-default {
+  background: var(--pivotal-teal);
+  color: white;
+}
+
+.pong-logo-container {
+  margin-left: -70px;
+  margin-top: -10px;
+}
+
+.pong-logo {
+  width: 50px;
+}
