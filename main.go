@@ -1,10 +1,10 @@
 package main
 
 import (
-	"net/http"
+	"encoding/json"
 	"github.com/Benjamintf1/queue-app/queue"
 	"io/ioutil"
-	"encoding/json"
+	"net/http"
 	"os"
 	"strconv"
 )
@@ -21,14 +21,15 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-type Queue_Response struct{
-	Queue []string
+type Queue_Response struct {
+	Queue         []string
 	ResourceCount int
 }
-func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *http.Request){
+
+func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		response := Queue_Response{
-			Queue: q.List(),
+			Queue:         q.List(),
 			ResourceCount: resourceCount,
 		}
 		marshalledResponse, err := json.Marshal(response)
@@ -36,6 +37,7 @@ func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *htt
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Write(marshalledResponse)
 	}
 }
@@ -44,7 +46,7 @@ type Queue_request struct {
 	Name string
 }
 
-func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
+func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
@@ -63,11 +65,13 @@ func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusConflict)
 			return
 		}
+
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Write([]byte{})
 	}
 }
 
-func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
+func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
@@ -86,7 +90,7 @@ func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Write([]byte{})
 	}
 }
-
