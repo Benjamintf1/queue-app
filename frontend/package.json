@@ -6,6 +6,7 @@
     "bootstrap": "^3.0.0",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
+    "react-browser-notifications": "^1.0.14",
     "react-dom": "^16.4.1",
     "react-scripts": "^1.1.4",
     "typeface-montserrat": "^0.0.54"

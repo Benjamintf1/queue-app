@@ -37,7 +37,7 @@ export default class AddToQueue extends Component {
     const { queue } = this.props;
     const { name } = this.state;
     const currentCanonicalName = canonicalName(name);
-    const nameAlreadyExists = this.props.queue.some( queueName => currentCanonicalName == canonicalName(queueName) );
+    const nameAlreadyExists = queue.some( queueName => currentCanonicalName == canonicalName(queueName) );
 
     return <form onSubmit={ e => { e.preventDefault(); this.onAddClick(name) } }>
       <FormGroup>
@@ -47,6 +47,7 @@ export default class AddToQueue extends Component {
             placeholder={"YOUR NAME"}
             onChange={ e => ( this.setState({ name: e.target.value }) ) }
             value={ name }
+            autoFocus
           />
           <InputGroup.Button>
             <Button

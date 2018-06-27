@@ -5,9 +5,11 @@ import {
   Col,
   PageHeader,
 } from 'react-bootstrap';
+import ReactNotifications from 'react-browser-notifications';
 import 'typeface-montserrat';
 
 import './Pong.css';
+import pongIconBlackSrc from './resource-icon-black.svg';
 import pongIconWhiteSrc from './resource-icon-white.svg';
 import AddToQueue from './AddToQueue';
 import Queue from './Queue';
@@ -39,6 +41,26 @@ function PongHeader({ availableResources }) {
   </PageHeader>;
 }
 
+class PongNotifier extends Component {
+  show() {
+    if (this.notifications && this.notifications.supported()) this.notifications.show();
+  }
+
+  onClick = event => {
+    this.notifications.close(event.target.tag);
+  }
+
+  render() {
+    return <ReactNotifications
+      onRef={ref => (this.notifications = ref)} // Required
+      title="Your table is ready!" // Required
+      body="Go grab it before it runs away!"
+      icon={pongIconBlackSrc}
+      onClick={this.onClick}
+    />;
+  }
+}
+
 class Pong extends Component {
   constructor(props) {
     super(props);
@@ -49,10 +71,26 @@ class Pong extends Component {
     };
   }
 
+  maybeNotify( newQueue ) {
+    const { queue: oldQueue, lastAddedName, resourceCount } = this.state;
+
+    if ( !lastAddedName ) return;
+
+    const oldPosition = oldQueue.indexOf( lastAddedName );
+    const newPosition = newQueue.indexOf( lastAddedName );
+
+    if ( newPosition < oldPosition && oldPosition >= resourceCount && newPosition < resourceCount ) {
+      console.log( "Yo you went from", oldPosition, "to", newPosition, "GRAB YO TABLE" );
+      this.notifications.show();
+    }
+  }
+
   refreshList() {
     fetch(API_URL + "/list")
       .then(response => response.json())
       .then(({ Queue: queue, ResourceCount: resourceCount }) => {
+        this.maybeNotify( queue );
+
         this.setState({
           queue: queue || [],
           resourceCount,
@@ -85,6 +123,7 @@ class Pong extends Component {
   onAddClick = name => {
     this.setState( ({ queue }) => ({
       queue: queue.concat( [ name ] ),
+      lastAddedName: name,
     }) );
     fetch(
       API_URL + "/add",
@@ -96,7 +135,7 @@ class Pong extends Component {
   }
 
   render() {
-    const { queue, resourceCount } = this.state;
+    const { queue, resourceCount, lastAddedName } = this.state;
     const availableResources = resourceCount - queue.length;
     const stillLoading = resourceCount == null;
 
@@ -111,6 +150,7 @@ class Pong extends Component {
     return (
       <div className={className}>
         <PongHeader availableResources={availableResources} />
+        <PongNotifier lastAddedName={lastAddedName} ref={notifications => this.notifications = notifications} />
         <Grid>
           <Row>
             <Col xs={0} md={3}></Col>
