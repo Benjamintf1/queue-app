@@ -8,7 +8,7 @@ import {
 import 'typeface-montserrat';
 
 import './Pong.css';
-import pongLogoSrc from './Anonymous-pong-01.svg';
+import pongIconWhiteSrc from './resource-icon-white.svg';
 import AddToQueue from './AddToQueue';
 import Queue from './Queue';
 
@@ -16,21 +16,21 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 const REFRESH_PERIOD = 5 * 1000;
 
 function PongHeader({ availableResources }) {
-  const pongLogo = <img className="pong-logo" src={pongLogoSrc} alt="PONG" />;
+  const pongIcon = <img className="pong-icon" src={pongIconWhiteSrc} alt="PONG" />;
 
   let contents;
 
   if ( availableResources == null ) {
     contents = <React.Fragment>
-      LOADING THE {pongLogo}
+      LOADING THE {pongIcon}
     </React.Fragment>;
   } else if ( availableResources > 0 ) {
     contents = <React.Fragment>
-      YOU MAY {pongLogo}
+      YOU MAY {pongIcon}
     </React.Fragment>;
   } else {
     contents = <React.Fragment>
-      {pongLogo} MUST WAIT
+      PLEASE WAIT TO {pongIcon}
     </React.Fragment>;
   }
 
@@ -115,7 +115,10 @@ class Pong extends Component {
           <Row>
             <Col xs={0} md={3}></Col>
             <Col xs={12} md={6}>
-              <AddToQueue onAddClick={this.onAddClick} />
+              <AddToQueue
+                onAddClick={this.onAddClick}
+                queue={this.state.queue}
+              />
               <Queue
                 resourceCount={this.state.resourceCount}
                 queue={this.state.queue}

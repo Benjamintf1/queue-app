@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^3.0.0",
     "react": "^16.4.1",
+    "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
+    "react-scripts": "^1.1.4",
     "typeface-montserrat": "^0.0.54"
   },
   "scripts": {
@@ -13,10 +15,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "bootstrap": "^3.0.0",
-    "react-bootstrap": "^0.32.1"
   },
   "eslintConfig": {
     "extends": "react-app",

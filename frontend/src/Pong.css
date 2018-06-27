@@ -8,11 +8,12 @@ body {
 
 #root {
   height: 100vh;
+  overflow-y: auto;
 }
 
 .Pong {
   background-color: var(--pivotal-teal);
-  height: 100%;
+  min-height: 100%;
   width: 100%;
 
   transition: background-color 500ms;
@@ -34,16 +35,36 @@ body {
   text-align: center;
 }
 
-.pong-logo {
+.page-header h1 {
+  font-size: 48px;
+}
+
+.pong-icon {
   width: 70px;
   margin: 0 10px;
-  vertical-align: top;
+  vertical-align: baseline;
+}
+
+h2 {
+  color: white;
+  font-size: 24px;
+  text-align: center;
 }
 
 .queue-entry {
   font-size: 24px;
 }
 
+.queue-entry-waiting {
+  opacity: .7;
+}
+
 .queue-entry-name {
+  vertical-align: middle;
+}
+
+.queue-pong-icon {
+  width: 50px;
+  margin-left: 10px;
   vertical-align: middle;
 }

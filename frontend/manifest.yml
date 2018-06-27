@@ -1,0 +1,6 @@
+---
+applications:
+- name: pong-queue
+  buildpack: nodejs_buildpack
+  env:
+    REACT_APP_API_URL: https://pong-backend.cfapps.io
