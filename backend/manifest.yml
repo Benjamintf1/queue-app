@@ -1,0 +1,9 @@
+---
+applications:
+- name: pong-backend
+  memory: 64M
+  buildpack: go_buildpack
+  command: backend
+  env:
+    GOPACKAGENAME: github.com/Benjamintf1/queue-app/backend
+    RESOURCE_COUNT: 2

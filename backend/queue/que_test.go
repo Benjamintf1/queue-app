@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/Benjamintf1/queue-app/queue"
+	. "github.com/Benjamintf1/queue-app/backend/queue"
 	"math/rand"
 )
 

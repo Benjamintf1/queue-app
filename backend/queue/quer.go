@@ -11,6 +11,12 @@ type Queuer struct {
 	sync.RWMutex
 }
 
+func Querer() *Queuer{
+	return &Queuer{
+		queue: make([]string, 0),
+	}
+}
+
 func (q *Queuer) List() []string {
 	q.RLock()
 	defer q.RUnlock()
