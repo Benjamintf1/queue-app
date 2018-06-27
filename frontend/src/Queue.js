@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Button,
+  Glyphicon,
   Well,
 } from 'react-bootstrap';
 
@@ -13,11 +14,11 @@ export default class Queue extends Component {
         <span className="queue-entry-name">{name}</span>
         <Button
           className="pull-right"
-          bsStyle="success"
+          bsStyle="danger"
           bsSize="large"
           onClick={() => onRemoveClick(name)}
         >
-          DONE
+          <Glyphicon glyph="remove" />
         </Button>
       </Well> ) }
     </div>;

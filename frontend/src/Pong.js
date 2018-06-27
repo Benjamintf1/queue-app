@@ -12,13 +12,12 @@ import pongLogoSrc from './Anonymous-pong-01.svg';
 import AddToQueue from './AddToQueue';
 import Queue from './Queue';
 
-const API_URL = "http://localhost:8080";
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 const REFRESH_PERIOD = 5 * 1000;
 
 function PongHeader({ availableResources }) {
   const pongLogo = <img className="pong-logo" src={pongLogoSrc} alt="PONG" />;
 
-  let className;
   let contents;
 
   if ( availableResources == null ) {
@@ -76,6 +75,19 @@ class Pong extends Component {
     }) );
     fetch(
       API_URL + "/remove",
+      {
+        method: "POST",
+        body: JSON.stringify({ Name: name }),
+      },
+    );
+  }
+
+  onAddClick = name => {
+    this.setState( ({ queue }) => ({
+      queue: queue.concat( [ name ] ),
+    }) );
+    fetch(
+      API_URL + "/add",
       {
         method: "POST",
         body: JSON.stringify({ Name: name }),
