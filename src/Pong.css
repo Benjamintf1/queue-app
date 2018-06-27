@@ -1,18 +1,49 @@
 body {
   --pivotal-green: #86c775;
   --pivotal-teal: #008774;
+  --pivotal-dark-yellow: hsl(49.3,90.5%,37.1%);
+  --pivotal-ink: #00253E;
+  font-family: "Montserrat";
 }
 
-.navbar-default {
-  background: var(--pivotal-teal);
+#root {
+  height: 100vh;
+}
+
+.Pong {
+  background-color: var(--pivotal-teal);
+  height: 100%;
+  width: 100%;
+
+  transition: background-color 500ms;
+}
+
+.Pong-loading {
+  background-color: var(--pivotal-ink);
+}
+
+.Pong-busy {
+  background-color: var(--pivotal-dark-yellow);
+}
+
+.page-header {
+  border-bottom: none;
   color: white;
-}
-
-.pong-logo-container {
-  margin-left: -70px;
-  margin-top: -10px;
+  margin-top: 0;
+  padding-top: 40px;
+  text-align: center;
 }
 
 .pong-logo {
-  width: 50px;
+  width: 70px;
+  margin: 0 10px;
+  vertical-align: top;
+}
+
+.queue-entry {
+  font-size: 24px;
+}
+
+.queue-entry-name {
+  vertical-align: middle;
 }

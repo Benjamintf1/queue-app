@@ -5,7 +5,8 @@
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "typeface-montserrat": "^0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -16,5 +17,9 @@
   "devDependencies": {
     "bootstrap": "^3.0.0",
     "react-bootstrap": "^0.32.1"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "eqeqeq": 0
   }
 }
