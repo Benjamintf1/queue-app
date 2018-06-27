@@ -16,7 +16,7 @@ export default class AddToQueue extends Component {
         <InputGroup bsSize="large">
           <FormControl type="text" placeholder={"YOUR NAME"} inputRef={ el => this.nameInput = el } />
           <InputGroup.Button>
-            <Button bsStyle="success" onSubmit={ () => onAddClick(this.nameInput.value) }>
+            <Button bsStyle="success" onClick={ () => onAddClick(this.nameInput.value) }>
               <Glyphicon glyph="plus" />
             </Button>
           </InputGroup.Button>
