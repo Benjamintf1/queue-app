@@ -11,23 +11,9 @@ import (
 var _ = Describe("Que", func() {
 	It("adds names and lists those names", func(){
 		q := Queuer{}
-		Expect(q.Add("test")).To(Succeed())
+		Expect(q.Add("Test")).To(Succeed())
 
-		Expect(q.List()).To(Equal([]string{"test"}))
-	})
-
-	It("ignores external whitespace", func(){
-		q := Queuer{}
-		Expect(q.Add("     test")).To(Succeed())
-
-		Expect(q.List()).To(Equal([]string{"test"}))
-	})
-
-	It("preserves internal whitespace", func(){
-		q := Queuer{}
-		Expect(q.Add(" 1 2")).To(Succeed())
-
-		Expect(q.List()).To(Equal([]string{"1 2"}))
+		Expect(q.List()).To(Equal([]string{"Test"}))
 	})
 
 	It("removes names", func(){
@@ -38,10 +24,43 @@ var _ = Describe("Que", func() {
 		Expect(q.List()).To(Equal([]string{}))
 	})
 
+	It("ignores external whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add("     test")).To(Succeed())
+
+		Expect(q.List()).To(Equal([]string{"test"}))
+
+		Expect(q.Remove("     test")).To(Succeed())
+	})
+
+	It("preserves internal whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add(" 1 2")).To(Succeed())
+
+		Expect(q.List()).To(Equal([]string{"1 2"}))
+
+		Expect(q.Remove(" 1 2")).To(Succeed())
+	})
+
+	It("folds internal whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add("1         2")).To(Succeed())
+
+		Expect(q.List()).To(Equal([]string{"1 2"}))
+
+		Expect(q.Remove("1         2")).To(Succeed())
+	})
+
 	It("returns an error if name is present in the queue", func(){
 		q := Queuer{}
 		Expect(q.Add("test")).To(Succeed())
 		Expect(q.Add("test")).ToNot(Succeed())
+	})
+
+	It("ignores capitilization", func(){
+		q := Queuer{}
+		Expect(q.Add("test")).To(Succeed())
+		Expect(q.Add("TeSt")).ToNot(Succeed())
 	})
 
 	It("returns an error if name is only whitespace", func(){

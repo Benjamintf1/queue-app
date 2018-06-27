@@ -21,7 +21,7 @@ func (q *Queuer) List() []string {
 func (q *Queuer) Add(name string) error {
 	q.Lock()
 	defer q.Unlock()
-	nameToAdd := strings.TrimSpace(name)
+	nameToAdd := FoldSpaces(name)
 	if nameToAdd == "" {
 		return errors.New("Name cannot be blank")
 	}
@@ -37,7 +37,7 @@ func (q *Queuer) Add(name string) error {
 func (q *Queuer) Remove(name string) error {
 	q.Lock()
 	defer q.Unlock()
-	nameToRemove := strings.TrimSpace(name)
+	nameToRemove := FoldSpaces(name)
 
 	location := q.exists(nameToRemove)
 	if location == -1 {
@@ -49,9 +49,13 @@ func (q *Queuer) Remove(name string) error {
 
 func (q *Queuer) exists(name string) (int) {
 	for location, existant := range q.queue {
-		if existant == name {
+		if strings.ToLower(existant) == strings.ToLower(name) {
 			return location
 		}
 	}
 	return -1
+}
+
+func FoldSpaces(s string) string{
+	return strings.Join(strings.Fields(strings.TrimSpace(s)), " ")
 }
