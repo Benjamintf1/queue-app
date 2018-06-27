@@ -26,6 +26,10 @@ func List(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 	}
 }
 
+type queue_request struct {
+	name string
+}
+
 func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
@@ -33,8 +37,14 @@ func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		request := queue_request{}
+		err = json.Unmarshal(body, &request)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
-		err = q.Add(string(body))
+		err = q.Add(request.name)
 		if err != nil {
 			w.WriteHeader(http.StatusConflict)
 			return
@@ -50,8 +60,14 @@ func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
+		request := queue_request{}
+		err = json.Unmarshal(body, &request)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
-		err = q.Remove(string(body))
+		err = q.Remove(request.name)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return

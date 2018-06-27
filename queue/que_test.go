@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "github.com/Benjamintf1/queue-app/que"
+	. "github.com/Benjamintf1/queue-app/queue"
 	"math/rand"
 )
 
@@ -14,6 +14,20 @@ var _ = Describe("Que", func() {
 		Expect(q.Add("test")).To(Succeed())
 
 		Expect(q.List()).To(Equal([]string{"test"}))
+	})
+
+	It("ignores external whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add("     test")).To(Succeed())
+
+		Expect(q.List()).To(Equal([]string{"test"}))
+	})
+
+	It("preserves internal whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add(" 1 2")).To(Succeed())
+
+		Expect(q.List()).To(Equal([]string{"1 2"}))
 	})
 
 	It("removes names", func(){
@@ -28,6 +42,11 @@ var _ = Describe("Que", func() {
 		q := Queuer{}
 		Expect(q.Add("test")).To(Succeed())
 		Expect(q.Add("test")).ToNot(Succeed())
+	})
+
+	It("returns an error if name is only whitespace", func(){
+		q := Queuer{}
+		Expect(q.Add("     ")).ToNot(Succeed())
 	})
 
 	It("doesn't have rece conditions", func() {

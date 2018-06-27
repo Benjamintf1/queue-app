@@ -3,6 +3,7 @@ package queue
 import (
 	"errors"
 	"sync"
+	"strings"
 )
 
 type Queuer struct {
@@ -20,20 +21,25 @@ func (q *Queuer) List() []string {
 func (q *Queuer) Add(name string) error {
 	q.Lock()
 	defer q.Unlock()
+	nameToAdd := strings.TrimSpace(name)
+	if nameToAdd == "" {
+		return errors.New("Name cannot be blank")
+	}
 
-	location := q.exists(name)
+	location := q.exists(nameToAdd)
 	if location != -1 {
 		return errors.New("name already exists in queue")
 	}
-	q.queue = append(q.queue, name)
+	q.queue = append(q.queue, nameToAdd)
 	return nil
 }
 
 func (q *Queuer) Remove(name string) error {
 	q.Lock()
 	defer q.Unlock()
+	nameToRemove := strings.TrimSpace(name)
 
-	location := q.exists(name)
+	location := q.exists(nameToRemove)
 	if location == -1 {
 		return errors.New("name doesn't exist in queue")
 	}
