@@ -5,29 +5,43 @@ import (
 	"github.com/Benjamintf1/queue-app/queue"
 	"io/ioutil"
 	"encoding/json"
+	"os"
+	"strconv"
 )
 
 func main() {
+	count, err := strconv.Atoi(os.Getenv("RESOURCE_COUNT"))
+	if err != nil {
+		count = 2
+	}
 	quer := &queue.Queuer{}
-	http.HandleFunc("/list", List(quer))
+	http.HandleFunc("/list", List(quer, count))
 	http.HandleFunc("/add", Add(quer))
 	http.HandleFunc("/remove", Remove(quer))
 	http.ListenAndServe(":8080", nil)
 }
 
-func List(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
+type Queue_Response struct{
+	Queue []string
+	ResourceCount int
+}
+func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *http.Request){
 	return func(w http.ResponseWriter, r *http.Request) {
-		response, err := json.Marshal(q.List())
+		response := Queue_Response{
+			Queue: q.List(),
+			ResourceCount: resourceCount,
+		}
+		marshalledResponse, err := json.Marshal(response)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		w.Write(response)
+		w.Write(marshalledResponse)
 	}
 }
 
-type queue_request struct {
-	name string
+type Queue_request struct {
+	Name string
 }
 
 func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
@@ -37,14 +51,14 @@ func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		request := queue_request{}
+		request := Queue_request{}
 		err = json.Unmarshal(body, &request)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		err = q.Add(request.name)
+		err = q.Add(request.Name)
 		if err != nil {
 			w.WriteHeader(http.StatusConflict)
 			return
@@ -60,14 +74,14 @@ func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request){
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		request := queue_request{}
+		request := Queue_request{}
 		err = json.Unmarshal(body, &request)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		err = q.Remove(request.name)
+		err = q.Remove(request.Name)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
