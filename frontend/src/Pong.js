@@ -46,6 +46,13 @@ class PongNotifier extends Component {
     if (this.notifications && this.notifications.supported()) this.notifications.show();
   }
 
+  constructor() {
+    super();
+    if (Notification.permission !== 'denied' || Notification.permission === "default") {
+        Notification.requestPermission(function (permission) {});
+    }
+  }
+
   onClick = event => {
     this.notifications.close(event.target.tag);
   }

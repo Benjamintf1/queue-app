@@ -47,7 +47,6 @@ export default class AddToQueue extends Component {
             placeholder={"YOUR NAME"}
             onChange={ e => ( this.setState({ name: e.target.value }) ) }
             value={ name }
-            onBlur={ e => e.target.focus() }
             autoFocus
           />
           <InputGroup.Button>
