@@ -52,6 +52,7 @@ h2 {
 }
 
 .queue-entry {
+  display: flex;
   font-size: 24px;
 }
 
@@ -69,7 +70,11 @@ h2 {
 }
 
 .queue-entry-name {
+  flex: 1 0 0px;
+  overflow: hidden;
   vertical-align: middle;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .queue-pong-icon {

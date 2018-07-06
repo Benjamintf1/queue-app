@@ -13,9 +13,9 @@ import pongIconBlackSrc from './resource-icon-black.svg';
 
 function QueueEntry({ isWaiting, name, onRemoveClick }) {
   return <Collapse in appear enter exit>
-      <div>
-        <Well className={"queue-entry clearfix" + ( isWaiting ? " queue-entry-waiting" : "" ) }>
-        <span className="queue-entry-name">{name}</span>
+  <div>
+      <Well className={"queue-entry clearfix" + ( isWaiting ? " queue-entry-waiting" : "" ) }>
+        <span className="queue-entry-name" title={name}>{name}</span>
         { !isWaiting && <img src={pongIconBlackSrc} className="queue-pong-icon" /> }
         <Button
           className="pull-right"
