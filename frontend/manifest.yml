@@ -1,6 +1,8 @@
 ---
 applications:
 - name: pong-queue
-  buildpack: nodejs_buildpack
+  memory: 256M
+  buildpack: https://github.com/pianohacker/create-react-app-buildpack.git
   env:
+    OPTIMIZE_MEMORY: true
     REACT_APP_API_URL: https://pong-backend.cfapps.io

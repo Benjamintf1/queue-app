@@ -166,13 +166,13 @@ class Pong extends Component {
                 onAddClick={this.onAddClick}
                 queue={this.state.queue}
               />
-              <Queue
-                resourceCount={this.state.resourceCount}
-                queue={this.state.queue}
-                onRemoveClick={this.onRemoveClick}
-              />
             </Col>
           </Row>
+          <Queue
+            resourceCount={this.state.resourceCount}
+            queue={this.state.queue}
+            onRemoveClick={this.onRemoveClick}
+          />
         </Grid>
       </div>
     );
