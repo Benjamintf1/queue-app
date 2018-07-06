@@ -36,11 +36,11 @@ body {
 }
 
 .page-header h1 {
-  font-size: 48px;
+  font-size: 72px;
 }
 
 .pong-icon {
-  width: 70px;
+  width: 100px;
   margin: 0 10px;
   vertical-align: baseline;
 }
