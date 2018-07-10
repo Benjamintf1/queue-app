@@ -28,7 +28,7 @@ export default class AddToQueue extends Component {
   }
 
   onAddClick = name => {
-    if ( /^\s*$/.test(name) || this.props.queue.some( queueName => canonicalName(name) == canonicalName(queueName) ) ) return;
+    if ( /^\s*$/.test(name) || this.props.queue.some( ( { Name: existingName } ) => canonicalName(name) == canonicalName(existingName) ) ) return;
     this.setState({ name: "" });
     this.props.onAddClick( strippedName(name) );
   }
@@ -37,7 +37,7 @@ export default class AddToQueue extends Component {
     const { queue } = this.props;
     const { name } = this.state;
     const currentCanonicalName = canonicalName(name);
-    const nameAlreadyExists = queue.some( queueName => currentCanonicalName == canonicalName(queueName) );
+    const nameAlreadyExists = queue.some( ( { Name: existingName } ) => currentCanonicalName == canonicalName(existingName) );
 
     return <form onSubmit={ e => { e.preventDefault(); this.onAddClick(name) } }>
       <FormGroup>

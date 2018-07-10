@@ -40,18 +40,18 @@ export default class Queue extends Component {
     return <Row>
       <Col xs={12} md={6}>
         <h2 className={queuePlaying.length ? null : "queue-empty"}>PLAYING:</h2>
-        { queuePlaying.map( ( name, i ) => <QueueEntry
-          key={name}
-          name={name}
+        { queuePlaying.map( ( { Name }, i ) => <QueueEntry
+          key={Name}
+          name={Name}
           onRemoveClick={onRemoveClick}
         /> ) }
         { queuePlaying.length == 0 && <p className="queue-placeholder">Nobody yet!</p> }
       </Col>
       <Col xs={12} md={6}>
         <h2 className={queueWaiting.length ? null : "queue-empty"}>WAITING:</h2>
-        { queueWaiting.map( ( name, i ) => <QueueEntry
-          key={name}
-          name={name}
+        { queueWaiting.map( ( { Name }, i ) => <QueueEntry
+          key={Name}
+          name={Name}
           onRemoveClick={onRemoveClick}
           isWaiting={true}
         /> ) }

@@ -83,8 +83,8 @@ class Pong extends Component {
 
     if ( !lastAddedName ) return;
 
-    const oldPosition = oldQueue.indexOf( lastAddedName );
-    const newPosition = newQueue.indexOf( lastAddedName );
+    const oldPosition = oldQueue.findIndex( ( { Name } ) => Name == lastAddedName );
+    const newPosition = newQueue.findIndex( ( { Name } ) => Name == lastAddedName );;
 
     if ( newPosition < oldPosition && oldPosition >= resourceCount && newPosition < resourceCount ) {
       console.log( "Yo you went from", oldPosition, "to", newPosition, "GRAB YO TABLE" );
@@ -116,7 +116,7 @@ class Pong extends Component {
 
   onRemoveClick = name => {
     this.setState( ({ queue }) => ({
-      queue: queue.filter( queueName => queueName != name ),
+      queue: queue.filter( ( { Name } ) => Name != name ),
     }) );
     fetch(
       API_URL + "/remove",
@@ -129,7 +129,7 @@ class Pong extends Component {
 
   onAddClick = name => {
     this.setState( ({ queue }) => ({
-      queue: queue.concat( [ name ] ),
+      queue: queue.concat( [ { Name: name } ] ),
       lastAddedName: name,
     }) );
     fetch(
