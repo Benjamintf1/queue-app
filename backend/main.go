@@ -14,23 +14,23 @@ func main() {
 	if err != nil {
 		count = 2
 	}
-	quer := &queue.Queuer{}
-	http.HandleFunc("/list", List(quer, count))
-	http.HandleFunc("/add", Add(quer))
-	http.HandleFunc("/remove", Remove(quer))
+	q := queue.New(count)
+	http.HandleFunc("/list", List(q))
+	http.HandleFunc("/add", Add(q))
+	http.HandleFunc("/remove", Remove(q))
 	http.ListenAndServe(":8080", nil)
 }
 
-type Queue_Response struct {
-	Queue         []string
+type QueueResponse struct {
+	Queue         []queue.Item
 	ResourceCount int
 }
 
-func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *http.Request) {
+func List(q *queue.Queue) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		response := Queue_Response{
-			Queue:         q.List(),
-			ResourceCount: resourceCount,
+		response := QueueResponse{
+			Queue: q.List(),
+			ResourceCount: q.ResourceCount,
 		}
 		marshalledResponse, err := json.Marshal(response)
 		if err != nil {
@@ -42,18 +42,18 @@ func List(q *queue.Queuer, resourceCount int) func(w http.ResponseWriter, r *htt
 	}
 }
 
-type Queue_request struct {
+type QueueRequest struct {
 	Name string
 }
 
-func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request) {
+func Add(q *queue.Queue) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		request := Queue_request{}
+		request := QueueRequest{}
 		err = json.Unmarshal(body, &request)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -71,14 +71,14 @@ func Add(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func Remove(q *queue.Queuer) func(w http.ResponseWriter, r *http.Request) {
+func Remove(q *queue.Queue) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		body, err := ioutil.ReadAll(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		request := Queue_request{}
+		request := QueueRequest{}
 		err = json.Unmarshal(body, &request)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
