@@ -4,7 +4,6 @@ import {
   Button,
   Col,
   Collapse,
-  Fade,
   Glyphicon,
   Row,
   Well,
@@ -12,8 +11,8 @@ import {
 
 import pongIconBlackSrc from './resource-icon-black.svg';
 
-const SHOW_TIME_STARTED = process.env.REACT_APP_SHOW_TIME_STARTED;
-const HIGHLIGHT_TIME_STARTED_AFTER = process.env.REACT_APP_HIGHLIGHT_TIME_STARTED_AFTER;
+const SHOW_TIME_STARTED = process.env.REACT_APP_SHOW_TIME_STARTED || false;
+const HIGHLIGHT_TIME_STARTED_AFTER = process.env.REACT_APP_HIGHLIGHT_TIME_STARTED_AFTER || 1;
 
 function QueueTimeStarted({ timeStarted: timeStartedString }) {
   let timeStarted = moment(timeStartedString);
@@ -32,7 +31,7 @@ function QueueEntry({ isWaiting, entry: { Name: name, TimeStarted: timeStarted }
   <div>
       <Well className={"queue-entry clearfix" + ( isWaiting ? " queue-entry-waiting" : "" ) }>
         <span className="queue-entry-name" title={name}>{name}</span>
-       {  !SHOW_TIME_STARTED && !isWaiting && <img src={pongIconBlackSrc} className="queue-pong-icon" /> }
+       {  !SHOW_TIME_STARTED && !isWaiting && <img src={pongIconBlackSrc} alt="" className="queue-pong-icon" /> }
        { SHOW_TIME_STARTED && timeStarted && <QueueTimeStarted timeStarted={timeStarted} /> }
         <Button
           className="pull-right"
@@ -62,7 +61,7 @@ export default class Queue extends Component {
           entry={entry}
           onRemoveClick={onRemoveClick}
         /> ) }
-        { queuePlaying.length == 0 && <p className="queue-placeholder">Nobody yet!</p> }
+        { queuePlaying.length === 0 && <p className="queue-placeholder">Nobody yet!</p> }
       </Col>
       <Col xs={12} md={6}>
         <h2 className={queueWaiting.length ? null : "queue-empty"}>WAITING:</h2>
@@ -72,7 +71,7 @@ export default class Queue extends Component {
           onRemoveClick={onRemoveClick}
           isWaiting={true}
         /> ) }
-        {queueWaiting.length == 0 && <p className="queue-placeholder">Not a soul</p> }
+        {queueWaiting.length === 0 && <p className="queue-placeholder">Not a soul</p> }
       </Col>
     </Row>;
   }
