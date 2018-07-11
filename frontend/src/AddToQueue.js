@@ -18,8 +18,6 @@ function canonicalName( name ) {
     .toLowerCase();
 }
 
-window.canonicalName = canonicalName;
-
 export default class AddToQueue extends Component {
   constructor(props) {
     super(props);

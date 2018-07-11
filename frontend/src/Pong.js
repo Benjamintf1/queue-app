@@ -115,16 +115,20 @@ class Pong extends Component {
   }
 
   onRemoveClick = name => {
-    this.setState( ({ queue }) => ({
-      queue: queue.filter( ( { Name } ) => Name != name ),
-    }) );
+    this.setState( ({ queue, resourceCount }) => {
+      let newQueue = queue.filter( ( { Name } ) => Name != name );
+
+      return newQueue;
+    } );
     fetch(
       API_URL + "/remove",
       {
         method: "POST",
         body: JSON.stringify({ Name: name }),
       },
-    );
+    ).then( () => {
+      this.refreshList();
+    } );
   }
 
   onAddClick = name => {
@@ -138,7 +142,9 @@ class Pong extends Component {
         method: "POST",
         body: JSON.stringify({ Name: name }),
       },
-    );
+    ).then( () => {
+      this.refreshList();
+    } );
   }
 
   render() {

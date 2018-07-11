@@ -2,8 +2,8 @@ package queue
 
 import (
 	"errors"
-	"sync"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -14,7 +14,7 @@ type Queue struct {
 }
 
 type Item struct {
-	Name string `json:"Name"`
+	Name        string     `json:"Name"`
 	TimeStarted *time.Time `json:"TimeStarted,omitempty"`
 }
 
@@ -49,8 +49,8 @@ func (q *Queue) Add(name string) error {
 	})
 	if len(q.queue) <= q.ResourceCount {
 		correctTime := time.Now()
-		q.queue[len(q.queue) -1] = Item{
-			Name: q.queue[len(q.queue) -1].Name,
+		q.queue[len(q.queue)-1] = Item{
+			Name:        q.queue[len(q.queue)-1].Name,
 			TimeStarted: &correctTime,
 		}
 	}
@@ -67,17 +67,17 @@ func (q *Queue) Remove(name string) error {
 		return errors.New("name doesn't exist in queue")
 	}
 	q.queue = append(q.queue[:location], q.queue[location+1:]...)
-	if location < q.ResourceCount {
+	if location < q.ResourceCount && len(q.queue) >= q.ResourceCount {
 		correctTime := time.Now()
-		q.queue[location] = Item{
-			Name: q.queue[location].Name,
+		q.queue[q.ResourceCount-1] = Item{
+			Name:        q.queue[q.ResourceCount-1].Name,
 			TimeStarted: &correctTime,
 		}
 	}
 	return nil
 }
 
-func (q *Queue) exists(name string) (int) {
+func (q *Queue) exists(name string) int {
 	for location, existant := range q.queue {
 		if strings.ToLower(existant.Name) == strings.ToLower(name) {
 			return location
@@ -86,6 +86,6 @@ func (q *Queue) exists(name string) (int) {
 	return -1
 }
 
-func FoldSpaces(s string) string{
+func FoldSpaces(s string) string {
 	return strings.Join(strings.Fields(strings.TrimSpace(s)), " ")
 }

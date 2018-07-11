@@ -54,6 +54,7 @@ h2 {
 .queue-entry {
   display: flex;
   font-size: 24px;
+  line-height: 50px;
 }
 
 .queue-empty {
@@ -72,9 +73,19 @@ h2 {
 .queue-entry-name {
   flex: 1 0 0px;
   overflow: hidden;
-  vertical-align: middle;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.queue-entry-time-started {
+  color: rgba(0, 0, 0, .7);
+  display: inline-block;
+  font-size: 60%;
+  margin-right: 10px;
+}
+
+.queue-entry-time-too-long {
+  color: rgba(255, 0, 0, .7);
 }
 
 .queue-pong-icon {
@@ -82,5 +93,4 @@ h2 {
   width: 50px;
   margin-left: 10px;
   margin-right: 10px;
-  vertical-align: middle;
 }
