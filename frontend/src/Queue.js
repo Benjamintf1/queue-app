@@ -32,7 +32,8 @@ function QueueEntry({ isWaiting, entry: { Name: name, TimeStarted: timeStarted }
   <div>
       <Well className={"queue-entry clearfix" + ( isWaiting ? " queue-entry-waiting" : "" ) }>
         <span className="queue-entry-name" title={name}>{name}</span>
-        { SHOW_TIME_STARTED && timeStarted && <QueueTimeStarted timeStarted={timeStarted} /> }
+       {  !SHOW_TIME_STARTED && !isWaiting && <img src={pongIconBlackSrc} className="queue-pong-icon" /> }
+       { SHOW_TIME_STARTED && timeStarted && <QueueTimeStarted timeStarted={timeStarted} /> }
         <Button
           className="pull-right"
           bsStyle="danger"
