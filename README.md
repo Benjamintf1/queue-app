@@ -1,1 +1,47 @@
-This application is a queueing applications for homogenious items. Fore example, laundry machines, ping-pong tables, meeting rooms, etc. If you have a cloud-foundry installation, you can `cd backend; cf push` and `cd frontend; cf push` and have a application on your foundation to handle queueing for resources. 
+# `queue-app`
+
+`queue-app` is a simple, easy-to-deploy web application to keep a queue of anything shared:
+
+* Ping-pong tables (its original use case)
+* Pool tables
+* Laundry machines
+* etc.
+
+## Deploying
+
+The front- and backend are deployed separately to a PaaS. The instructions below use [CloudFoundry](https://www.cloudfoundry.org/), but may also work with Heroku.
+
+First, we need to customize and deploy the backend:
+
+```console
+$ cd backend
+$ vim manifest.yml
+...
+    # Set this to the number of available tables/rooms/etc.
+    RESOURCE_COUNT: 2
+$ cf push
+...
+  routes:
++   pong-backend.mycf.example
+```
+
+Then, point the frontend at your freshly deployed backend, and push it as well:
+
+```console
+$ cd ../frontend
+$ vim manifest.yml
+...
+    # Enter the route of the backend application you just pushed
+    REACT_APP_API_URL: https://pong-backend.mycf.example
+$ cf push
+...
+  routes:
++   pong-queue.mycf.example
+```
+
+Now, if you visit https://pong-queue.mycf.example, your queue should be up and running!
+
+## TODO
+* Allow customization of branding (icon, colors, etc.)
+* WebExtension
+* Document time tracking
