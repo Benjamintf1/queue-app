@@ -5,13 +5,12 @@ import {
   Col,
   PageHeader,
 } from 'react-bootstrap';
-import ReactNotifications from 'react-browser-notifications';
 import 'typeface-montserrat';
 
 import './Pong.css';
-import pongIconBlackSrc from './resource-icon-black.svg';
 import pongIconWhiteSrc from './resource-icon-white.svg';
 import AddToQueue from './AddToQueue';
+import Notifier from './Notifier';
 import Queue from './Queue';
 
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
@@ -39,33 +38,6 @@ function PongHeader({ availableResources }) {
   return <PageHeader>
     {contents}
   </PageHeader>;
-}
-
-class PongNotifier extends Component {
-  show() {
-    if (this.notifications && this.notifications.supported()) this.notifications.show();
-  }
-
-  constructor() {
-    super();
-    if (Notification.permission !== 'denied' || Notification.permission === "default") {
-        Notification.requestPermission(function (permission) {});
-    }
-  }
-
-  onClick = event => {
-    this.notifications.close(event.target.tag);
-  }
-
-  render() {
-    return <ReactNotifications
-      onRef={ref => (this.notifications = ref)} // Required
-      title="Your table is ready!" // Required
-      body="Go grab it before it runs away!"
-      icon={pongIconBlackSrc}
-      onClick={this.onClick}
-    />;
-  }
 }
 
 class Pong extends Component {
@@ -163,7 +135,7 @@ class Pong extends Component {
     return (
       <div className={className}>
         <PongHeader availableResources={availableResources} />
-        <PongNotifier lastAddedName={lastAddedName} ref={notifications => this.notifications = notifications} />
+        <Notifier lastAddedName={lastAddedName} ref={notifications => this.notifications = notifications} />
         <Grid>
           <Row>
             <Col xs={0} md={3}></Col>
