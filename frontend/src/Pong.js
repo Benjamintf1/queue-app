@@ -10,6 +10,7 @@ import 'typeface-montserrat';
 import './Pong.css';
 import pongIconWhiteSrc from './resource-icon-white.svg';
 import AddToQueue from './AddToQueue';
+import Favicon from './Favicon';
 import Notifier from './Notifier';
 import Queue from './Queue';
 
@@ -136,6 +137,7 @@ class Pong extends Component {
       <div className={className}>
         <PongHeader availableResources={availableResources} />
         <Notifier lastAddedName={lastAddedName} ref={notifications => this.notifications = notifications} />
+        <Favicon status={availableResources > 0 ? 'free' : 'busy'} />
         <Grid>
           <Row>
             <Col xs={0} md={3}></Col>

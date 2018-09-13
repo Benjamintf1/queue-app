@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg598"
+   sodipodi:docname="resource-icon-busy.svg"
+   viewBox="0 0 16 16"
+   sodipodi:version="0.32"
+   version="1.0"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   y="0"
+   x="0"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   width="16"
+   height="16">
+  <sodipodi:namedview
+     id="base"
+     bordercolor="#666666"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     pagecolor="#006f7a"
+     inkscape:zoom="64"
+     inkscape:window-x="3840"
+     showgrid="true"
+     borderopacity="1.0"
+     inkscape:current-layer="svg598"
+     inkscape:cx="2.9802388"
+     inkscape:cy="8.0644307"
+     inkscape:window-y="0"
+     inkscape:window-height="2132"
+     inkscape:pageopacity="0"
+     showborder="true"
+     inkscape:window-maximized="1"
+     inkscape:pagecheckerboard="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid820" />
+  </sodipodi:namedview>
+  <defs
+     id="defs600">
+    <linearGradient
+       id="linearGradient629"
+       y2="-123.04"
+       gradientUnits="userSpaceOnUse"
+       x2="120.26"
+       gradientTransform="matrix(0.08844981,0,0,0.02086094,5.6062555,18.566724)"
+       y1="-123.04"
+       x1="15.458">
+      <stop
+         id="stop610"
+         style="stop-color:#ffffff;stop-opacity:0"
+         offset="0" />
+      <stop
+         id="stop611"
+         style="stop-color:#ffffff;stop-opacity:0.3764706"
+         offset="1" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient629"
+       id="linearGradient4534"
+       x1="6"
+       y1="8"
+       x2="9"
+       y2="8"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-1)" />
+  </defs>
+  <rect
+     style="fill:#b39409;fill-opacity:1;stroke-width:0.5"
+     id="rect4524"
+     width="16"
+     height="16"
+     x="0"
+     y="0"
+     rx="3"
+     ry="3" />
+  <rect
+     x="3"
+     y="4"
+     width="1"
+     height="6"
+     rx="0.16842106"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.03308188pt"
+     id="rect621" />
+  <rect
+     x="8"
+     y="7"
+     width="1.9999998"
+     height="1.9999998"
+     rx="0.2"
+     style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke-width:0.03929581pt"
+     id="rect623" />
+  <metadata
+     id="metadata3398">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+        <dc:date>2009-04-04T02:51:08</dc:date>
+        <dc:description>A in-action illustration of the classical game Ping Pong / Paddles / Pong / Computer Tennis. Illustration created by Andreas Nilsson</dc:description>
+        <dc:source>https://openclipart.org/detail/23994/pong_01-by-anonymous-23994</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Anonymous</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>computer</rdf:li>
+            <rdf:li>game</rdf:li>
+            <rdf:li>ping pong</rdf:li>
+            <rdf:li>tennis</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <use
+     x="0"
+     y="0"
+     xlink:href="#rect621"
+     id="use818"
+     transform="translate(9,2)"
+     width="100%"
+     height="100%" />
+  <rect
+     style="fill:url(#linearGradient4534);fill-opacity:1.0;stroke-width:1"
+     id="rect4526"
+     width="3"
+     height="2"
+     x="5"
+     y="7" />
+</svg>
