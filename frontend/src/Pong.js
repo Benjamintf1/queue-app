@@ -60,6 +60,7 @@ class Pong extends Component {
     const newPosition = newQueue.findIndex( ( { Name } ) => Name === lastAddedName );;
 
     if ( newPosition < oldPosition && oldPosition >= resourceCount && newPosition < resourceCount ) {
+      // TODO - remove when #2 is fixed
       console.log( "Yo you went from", oldPosition, "to", newPosition, "GRAB YO TABLE" );
       this.notifications.show();
     }
@@ -79,6 +80,8 @@ class Pong extends Component {
   }
 
   componentDidMount() {
+    console.log("https://github.com/Benjamintf1/queue-app - made with love by @Benjamintf1 and @pianohacker");
+
     this.refreshList();
     this.refreshInterval = setInterval( () => { this.refreshList() }, REFRESH_PERIOD );
   }
