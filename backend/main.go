@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/Benjamintf1/queue-app/backend/queue"
+	"github.com/benjamintf1/queue-app/backend/queue"
 	"io/ioutil"
 	"net/http"
 	"os"

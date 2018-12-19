@@ -1,107 +1,118 @@
 package queue_test
 
 import (
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
+	"testing"
 
-	. "github.com/Benjamintf1/queue-app/backend/queue"
-	"math/rand"
 	"time"
+
+	"github.com/benjamintf1/queue-app/backend/queue"
+	. "github.com/benjamintf1/queue-app/backend/queue"
 )
 
-var _ = Describe("Que", func() {
-	It("Returns list of people using the resource", func(){
-		beforeAdd := time.Now()
-		q := New(1)
-		Expect(q.Add("Test")).To(Succeed())
-		Expect(q.Add("Test2")).To(Succeed())
-		afterAdd := time.Now()
+func TestAddAndRemove(t *testing.T) {
+	q := queue.New(1)
+	if q.Add("Test") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
+	if q.Add("Test2") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
 
-		list := q.List()
-		Expect(list).To(HaveLen(2))
-		Expect(list[0].Name).To(Equal("Test"))
-		timeStarted := list[0].TimeStarted
-		Expect(timeStarted.Before(afterAdd)).To(BeTrue())
-		Expect(timeStarted.After(beforeAdd)).To(BeTrue())
+	list := q.List()
+	if len(list) != 2 {
+		t.Fatalf("Expected list to have a length of 2, was %d", len(list))
+	}
+	if list[0].Name != "Test" {
+		t.Fatalf("Expected list entry 1 to be Test, was %s", list[0].Name)
+	}
 
-		Expect(list[1].Name).To(Equal("Test2"))
-	})
+	if list[1].Name != "Test2" {
+		t.Fatalf("Expected list entry 2 to be Test, was %s", list[1].Name)
+	}
 
-	It("Returns list of people using the resource with the time they started using it", func(){
-		q := New(1)
-		Expect(q.Add("Test")).To(Succeed())
-		Expect(q.Add("Test2")).To(Succeed())
+	if q.Remove("Test") != nil {
+		t.Fatalf("Expected remove to succeed")
+	}
+	list = q.List()
+	if len(list) != 1 {
+		t.Fatalf("Expected list to have a length of 1, was %d", len(list))
+	}
+	if list[0].Name != "Test2" {
+		t.Fatalf("Expected list entry 1 to be Test2, was %s", list[0].Name)
+	}
 
-		beforeRemove := time.Now()
-		Expect(q.Remove("Test")).To(Succeed())
-		afterRemove := time.Now()
+	if q.Remove("Test2") != nil {
+		t.Fatalf("Expected remove to succeed")
+	}
 
-		list := q.List()
-		Expect(list).To(HaveLen(1))
-		timeStarted := list[0].TimeStarted
-		Expect(timeStarted.Before(afterRemove)).To(BeTrue())
-		Expect(timeStarted.After(beforeRemove)).To(BeTrue())
-		Expect(timeStarted).ToNot(Equal(time.Time{}))
-	})
+	list = q.List()
+	if len(list) != 0 {
+		t.Fatalf("Expected list to have a length of 0, was %d", len(list))
+	}
+}
 
-	It("removes names", func(){
-		q := New(0)
-		Expect(q.Add("test")).To(Succeed())
-		Expect(q.Remove("test")).To(Succeed())
+func TestTimeStartedList(t *testing.T) {
+	q := New(1)
+	beforeAdd := time.Now()
+	if q.Add("Test") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
+	afterAdd := time.Now()
+	if q.Add("Test2") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
+	list := q.List()
+	timeStarted := list[0].TimeStarted
+	if timeStarted.After(afterAdd) || timeStarted.Before(beforeAdd) {
+		t.Fatalf("expected time started to be accurate")
+	}
+	beforeRemove := time.Now()
+	if q.Remove("Test") != nil {
+		t.Fatalf("Expected remove to succeed")
+	}
+	afterRemove := time.Now()
 
-		Expect(q.List()).To(Equal([]Item{}))
-	})
+	list = q.List()
+	timeStarted = list[0].TimeStarted
+	if len(list) != 1 {
+		t.Fatalf("Expected list to have a length of 1, was %d", len(list))
+	}
+	if timeStarted.After(afterRemove) || timeStarted.Before(beforeRemove) {
+		t.Fatalf("expected time started to be accurate")
+	}
+	if timeStarted.Equal(time.Time{}) {
+		t.Fatalf("Time should not be unix epoch")
+	}
+}
 
-	It("ignores external whitespace", func(){
-		q := New(0)
-		Expect(q.Add("     test")).To(Succeed())
+func TestSpacing(t *testing.T) {
+	q := New(0)
+	if q.Add("     tEsT    t") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
 
-		Expect(q.List()).To(Equal([]Item{ { Name: "test" }}))
+	name := q.List()[0].Name
+	if name != "tEsT t" {
+		t.Fatalf("Expected name to be correctly normalized, was %s", name)
+	}
+}
 
-		Expect(q.Remove("     test")).To(Succeed())
-	})
+func TestBadAddAndRemove(t *testing.T) {
+	q := New(0)
+	if q.Add("     t ") != nil {
+		t.Fatalf("Expected add to succeed")
+	}
 
-	It("preserves internal whitespace", func(){
-		q := New(0)
-		Expect(q.Add(" 1 2")).To(Succeed())
-
-		Expect(q.List()).To(Equal([]Item{ { Name: "1 2" }}))
-
-		Expect(q.Remove(" 1 2")).To(Succeed())
-	})
-
-	It("folds internal whitespace", func(){
-		q := New(0)
-		Expect(q.Add("1         2")).To(Succeed())
-
-		Expect(q.List()).To(Equal([]Item{ { Name: "1 2" }}))
-
-		Expect(q.Remove("1         2")).To(Succeed())
-	})
-
-	It("returns an error if name is present in the queue", func(){
-		q := New(0)
-		Expect(q.Add("test")).To(Succeed())
-		Expect(q.Add("test")).ToNot(Succeed())
-	})
-
-	It("ignores capitilization", func(){
-		q := New(0)
-		Expect(q.Add("test")).To(Succeed())
-		Expect(q.Add("TeSt")).ToNot(Succeed())
-	})
-
-	It("returns an error if name is only whitespace", func(){
-		q := New(0)
-		Expect(q.Add("     ")).ToNot(Succeed())
-	})
-
-	It("doesn't have race conditions", func() {
-		q := New(0)
-		for i := 0; i < 100; i++ {
-			go q.Add(string(rand.Int()))
-			go q.Remove(string(rand.Int()))
-			go q.List()
-		}
-	})
-})
+	if q.Add("T") == nil {
+		t.Fatalf("Expected add to fail")
+	}
+	if q.Add(" ") == nil {
+		t.Fatalf("Expected add to fail")
+	}
+	if q.Remove(" ") == nil {
+		t.Fatalf("Expected remove to fail")
+	}
+	if q.Remove("abcd") == nil {
+		t.Fatalf("Expected remove to fail")
+	}
+}
