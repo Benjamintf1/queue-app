@@ -34,7 +34,7 @@ spec:
         - name: REACT_APP_HIGHLIGHT_TIME_STARTED_AFTER
           value: "20"
         - name: REACT_APP_API_URL
-          value: "http://localhost:8080"
+          value: " "
 
 
 ---
@@ -49,9 +49,9 @@ spec:
     ports:
       - name: backend
         protocol: TCP
-        port: 80
+        port: 81
         targetPort: 8080
       - name: frontend
         protocol: TCP
-        port: 81
+        port: 80
         targetPort: 3000
