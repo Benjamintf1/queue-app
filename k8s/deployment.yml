@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: pong-queue
+    labels:
+      app: pong
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pong
+  template:
+    metadata:
+      labels:
+        app: pong
+    spec:
+      containers:
+      - name: queue-backend
+        image: benjamintf1/queue-backend:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: RESOURCE_COUNT
+          value: "2"
+        - name: PORT
+          value: "8080"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+    name: pong
+spec:
+    type: LoadBalancer
+    selector:
+      app: pong
+    ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080

@@ -2,11 +2,13 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/benjamintf1/queue-app/backend/queue"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/benjamintf1/queue-app/backend/queue"
 )
 
 func main() {
@@ -14,11 +16,19 @@ func main() {
 	if err != nil {
 		count = 2
 	}
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err != nil {
+		port = 8080
+	}
 	q := queue.New(count)
 	http.HandleFunc("/list", List(q))
 	http.HandleFunc("/add", Add(q))
 	http.HandleFunc("/remove", Remove(q))
-	http.ListenAndServe(":8080", nil)
+	err = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	if err != nil {
+		fmt.Printf("Done serving, error: %s \n", err)
+		os.Exit(1)
+	}
 }
 
 type QueueResponse struct {
@@ -29,7 +39,7 @@ type QueueResponse struct {
 func List(q *queue.Queue) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		response := QueueResponse{
-			Queue: q.List(),
+			Queue:         q.List(),
 			ResourceCount: q.ResourceCount,
 		}
 		marshalledResponse, err := json.Marshal(response)
