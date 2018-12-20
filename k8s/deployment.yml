@@ -24,6 +24,18 @@ spec:
           value: "2"
         - name: PORT
           value: "8080"
+      - name: queue-frontend
+        image: benjamintf1/queue-frontend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_SHOW_TIME_STARTED
+          value: "true"
+        - name: REACT_APP_HIGHLIGHT_TIME_STARTED_AFTER
+          value: "20"
+        - name: REACT_APP_API_URL
+          value: "http://localhost:8080"
+
 
 ---
 kind: Service
@@ -35,6 +47,11 @@ spec:
     selector:
       app: pong
     ports:
-        - protocol: TCP
-          port: 80
-          targetPort: 8080
+      - name: backend
+        protocol: TCP
+        port: 80
+        targetPort: 8080
+      - name: frontend
+        protocol: TCP
+        port: 81
+        targetPort: 3000
