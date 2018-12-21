@@ -41,17 +41,31 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-    name: pong
+  name: pong
+  annotations:
+    cloud.google.com/app-protocols: '{"frontend":"HTTPS","frontend":"HTTP"}'
+    service.alpha.kubernetes.io/app-protocols: '{"frontend":"HTTPS","frontend":"HTTP"}'
 spec:
-    type: LoadBalancer
+    type: NodePort
     selector:
       app: pong
     ports:
       - name: backend
         protocol: TCP
-        port: 81
+        port: 8081
         targetPort: 8080
       - name: frontend
         protocol: TCP
-        port: 80
+        port: 8080
         targetPort: 3000
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pong-ingress
+spec:
+  tls:
+  - secretName: tls-secret
+  backend:
+    serviceName: pong
+    servicePort: 8080
