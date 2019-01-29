@@ -35,7 +35,8 @@ spec:
           value: "20"
         - name: REACT_APP_API_URL
           value: " "
-
+        - name: DANGEROUSLY_DISABLE_HOST_CHECK
+          value: "true"
 
 ---
 kind: Service
