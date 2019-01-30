@@ -21,6 +21,7 @@ func main() {
 		port = 8080
 	}
 	q := queue.New(count)
+	http.HandleFunc("/", List(q))
 	http.HandleFunc("/backend/list", List(q))
 	http.HandleFunc("/backend/add", Add(q))
 	http.HandleFunc("/backend/remove", Remove(q))

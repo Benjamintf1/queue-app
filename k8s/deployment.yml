@@ -20,6 +20,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /backend/list
+            port: 8080
         env:
         - name: RESOURCE_COUNT
           value: "2"
@@ -104,15 +108,7 @@ spec:
         backend:
           serviceName: pong-frontend
           servicePort: 8080
-      - path: /list
-        backend:
-          serviceName: pong-backend
-          servicePort: 8080
-      - path: /add
-        backend:
-          serviceName: pong-backend
-          servicePort: 8080
-      - path: /remove
+      - path: /backend/*
         backend:
           serviceName: pong-backend
           servicePort: 8080
