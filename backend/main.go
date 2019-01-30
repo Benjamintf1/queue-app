@@ -21,9 +21,9 @@ func main() {
 		port = 8080
 	}
 	q := queue.New(count)
-	http.HandleFunc("/list", List(q))
-	http.HandleFunc("/add", Add(q))
-	http.HandleFunc("/remove", Remove(q))
+	http.HandleFunc("/backend/list", List(q))
+	http.HandleFunc("/backend/add", Add(q))
+	http.HandleFunc("/backend/remove", Remove(q))
 	err = http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 	if err != nil {
 		fmt.Printf("Done serving, error: %s \n", err)

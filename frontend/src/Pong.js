@@ -14,7 +14,6 @@ import Favicon from './Favicon';
 import Notifier from './Notifier';
 import Queue from './Queue';
 
-const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 const REFRESH_PERIOD = 5 * 1000;
 
 function PongHeader({ availableResources }) {
@@ -59,8 +58,8 @@ class Pong extends Component {
     const oldPosition = oldQueue.findIndex( ( { Name } ) => Name === lastAddedName );
     const newPosition = newQueue.findIndex( ( { Name } ) => Name === lastAddedName );
 
-    if ( newPosition !== -1 && 
-        newPosition < oldPosition && 
+    if ( newPosition !== -1 &&
+        newPosition < oldPosition &&
         oldPosition >= resourceCount &&
         newPosition < resourceCount ) {
       this.notifications.show();
@@ -68,7 +67,7 @@ class Pong extends Component {
   }
 
   refreshList() {
-    fetch(API_URL + "/list")
+    fetch("/backend/list")
       .then(response => response.json())
       .then(({ Queue: queue, ResourceCount: resourceCount }) => {
         this.maybeNotify( queue );
@@ -98,7 +97,7 @@ class Pong extends Component {
       return newQueue;
     } );
     fetch(
-      API_URL + "/remove",
+      "/backend/remove",
       {
         method: "POST",
         body: JSON.stringify({ Name: name }),
@@ -114,7 +113,7 @@ class Pong extends Component {
       lastAddedName: name,
     }) );
     fetch(
-      API_URL + "/add",
+      "/backend/add",
       {
         method: "POST",
         body: JSON.stringify({ Name: name }),

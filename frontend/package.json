@@ -21,6 +21,5 @@
   "eslintConfig": {
     "extends": "react-app",
     "eqeqeq": 0
-  },
-  "proxy": "http://localhost:8080/"
+  }
 }

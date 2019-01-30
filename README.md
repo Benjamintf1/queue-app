@@ -31,8 +31,6 @@ Then, point the frontend at your freshly deployed backend, and push it as well:
 $ cd ../frontend
 $ vim manifest.yml
 ...
-    # Enter the route of the backend application you just pushed
-    REACT_APP_API_URL: https://pong-backend.mycf.example
 $ cf push
 ...
   routes:
