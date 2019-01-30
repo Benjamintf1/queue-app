@@ -20,10 +20,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
-        readinessProbe:
-          httpGet:
-            path: /backend/list
-            port: 8080
         env:
         - name: RESOURCE_COUNT
           value: "2"
