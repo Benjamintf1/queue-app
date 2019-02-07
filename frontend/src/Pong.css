@@ -1,6 +1,6 @@
 body {
   --pivotal-green: #86c775;
-  --pivotal-teal: #008774;
+  --pivotal-mint: #00b5a3;
   --pivotal-dark-yellow: hsl(49.3,90.5%,37.1%);
   --pivotal-ink: #00253E;
   font-family: "Montserrat";
@@ -12,7 +12,7 @@ body {
 }
 
 .Pong {
-  background-color: var(--pivotal-teal);
+  background-color: var(--pivotal-mint);
   min-height: 100%;
   width: 100%;
 
