@@ -3,7 +3,7 @@ applications:
 - name: pong-queue
   memory: 256M
   routes:
-  - route: https://pong-queue-staging-test.cfapps.io/
+  - route: https://pong-queue.cfapps.io/
   buildpack: https://github.com/pianohacker/create-react-app-buildpack.git
   env:
     OPTIMIZE_MEMORY: true
