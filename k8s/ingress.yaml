@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pong-ingress
+  annotations:
+        kubernetes.io/ingress.global-static-ip-name: pong-ip
+        kubernetes.io/ingress.allow-http: "false"
+spec:
+  tls:
+  - secretName: tls-secret
+  rules:
+  - http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: pong-frontend
+          servicePort: 8080
+      - path: /backend/*
+        backend:
+          serviceName: pong-backend
+          servicePort: 8080

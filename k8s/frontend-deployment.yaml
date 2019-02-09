@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: pong-frontend
+    labels:
+      app: pong-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pong-frontend
+  template:
+    metadata:
+      labels:
+        app: pong-frontend
+    spec:
+      containers:
+      - name: queue-frontend
+        image: benjamintf1/queue-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: REACT_APP_SHOW_TIME_STARTED
+          value: "true"
+        - name: REACT_APP_HIGHLIGHT_TIME_STARTED_AFTER
+          value: "20"

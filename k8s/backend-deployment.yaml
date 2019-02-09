@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: pong-backend
+    labels:
+      app: pong-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pong-backend
+  template:
+    metadata:
+      labels:
+        app: pong-backend
+    spec:
+      containers:
+      - name: queue-backend
+        image: benjamintf1/queue-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: RESOURCE_COUNT
+          value: "2"
+        - name: PORT
+          value: "8080"
