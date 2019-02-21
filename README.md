@@ -22,7 +22,7 @@ $ vim manifest.yml
 $ cf push
 ...
   routes:
-+   pong-backend.mycf.example
++   pong-queue.mycf.example/backend
 ```
 
 Then, point the frontend at your freshly deployed backend, and push it as well:
@@ -42,4 +42,3 @@ Now, if you visit https://pong-queue.mycf.example, your queue should be up and r
 ## TODO
 * Allow customization of branding (icon, colors, etc.)
 * WebExtension
-* Document time tracking
