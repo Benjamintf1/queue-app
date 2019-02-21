@@ -39,6 +39,10 @@ $ cf push
 
 Now, if you visit https://pong-queue.mycf.example, your queue should be up and running!
 
+## Deploying on Kubernetes
+
+If you want to deploy against kubernetes, you should first create a static global ip called `pong-ip` and a certificated called `tls-secret`. Then simply apply everything in the k8s folder(with modified env variables if needed) and point the dns toward the static ip that was allocated. 
+
 ## TODO
 * Allow customization of branding (icon, colors, etc.)
 * WebExtension
